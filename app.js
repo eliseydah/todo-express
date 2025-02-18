@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 
 // initialize Express.js server and save as a variable
@@ -6,6 +7,10 @@ const bodyParser = require("body-parser");
 const app = express();
 
 app.use(bodyParser.json());
+
+// allow all origins
+app.use(cors());
+
 let todos = []; // In-memory storage for todos
 
 // GET endpoint to fetch all todo items
