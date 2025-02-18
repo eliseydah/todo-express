@@ -11,7 +11,13 @@ app.use(bodyParser.json());
 // allow all origins
 app.use(cors());
 
-let todos = []; // In-memory storage for todos
+let todos = [
+  {
+    id: 1,
+    title: "Test todo!",
+    completed: false,
+  },
+]; // In-memory storage for todos
 
 // GET endpoint to fetch all todo items
 app.get("/todos", (req, res) => {
