@@ -11,6 +11,10 @@ app.use(bodyParser.json());
 // allow all origins
 app.use(cors());
 
+/**
+ * To-do app endpoints
+ */
+
 let todos = [
   {
     id: 1,
@@ -23,11 +27,9 @@ let todos = [
 app.get("/todos", (req, res) => {
   res.json(todos);
 });
-
 // POST endpoint to create a new todo item
 // provide `title` and optionally `completed` in the request body as JSON
 app.post("/todos", (req, res) => {
-  console.log(req.body);
   const todo = {
     id: todos.length + 1,
     title: req.body.title,
@@ -45,11 +47,11 @@ app.put("/todos/:id", (req, res) => {
   if (!todo) {
     return res.status(404).json({ error: "Todo not found" });
   }
-  todo.title = req.body.title || todo.title;
-  todo.completed = req.body.completed || todo.completed;
+  todo.title = req.body.title === undefined ? todo.title : req.body.title;
+  todo.completed =
+    req.body.completed === undefined ? todo.completed : req.body.completed;
   res.json(todo);
 });
-
 // DELETE endpoint to remove an existing todo item with the specified `id`
 app.delete("/todos/:id", (req, res) => {
   const id = parseInt(req.params.id);
@@ -58,6 +60,45 @@ app.delete("/todos/:id", (req, res) => {
     return res.status(404).json({ error: "Todo not found" });
   }
   todos.splice(index, 1);
+  res.status(204).send();
+});
+
+/**
+ * Wishlist app endpoints
+ */
+let wishes = [
+  {
+    id: 1,
+    description: "description",
+    title: "Test wishes!",
+    link: "link",
+    category: "",
+  },
+];
+
+app.get("/wishes", (req, res) => {
+  res.json(wishes);
+});
+
+app.post("/wishes", (req, res) => {
+  const wish = {
+    id: wishes.length + 1,
+    title: req.body.title,
+    description: req.body.description,
+    link: req.body.link,
+    category: req.body.category,
+  };
+  wishes.push(wish);
+  res.status(201).json(wish);
+});
+
+app.delete("/wishes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = wishes.findIndex((t) => t.id === id);
+  if (index === -1) {
+    return res.status(404).json({ error: "Wish not found" });
+  }
+  wishes.splice(index, 1);
   res.status(204).send();
 });
 
