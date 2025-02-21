@@ -101,7 +101,40 @@ app.delete("/wishes/:id", (req, res) => {
   wishes.splice(index, 1);
   res.status(204).send();
 });
+let chat = [
+  {
+    id: 1,
+    text: "text",
+    title: "NAme",
+    side: "side",
+    time: "time",
+  },
+];
+app.get("/chat", (req, res) => {
+  res.json(chat);
+});
 
+app.post("/chat", (req, res) => {
+  const message = {
+    id: chat.length + 1,
+    text: req.body.text,
+    title: req.body.title,
+    side: req.body.side,
+    time: req.body.time,
+  };
+  chat.push(message);
+  res.status(201).json(chat);
+});
+
+app.delete("/chat/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = chat.findIndex((t) => t.id === id);
+  if (index === -1) {
+    return res.status(404).json({ error: "Chat not found" });
+  }
+  chat.splice(index, 1);
+  res.status(204).send();
+});
 // run the server on port 3000
 // for example the app can run locally at this URL: http://localhost:3000
 const PORT = process.env.PORT || 3000;
