@@ -31,7 +31,7 @@ app.get("/todos", (req, res) => {
 // provide `title` and optionally `completed` in the request body as JSON
 app.post("/todos", (req, res) => {
   const todo = {
-    id: todos.length + 1,
+    id: crypto.randomUUID(),
     title: req.body.title,
     completed: req.body.completed || false,
   };
@@ -42,7 +42,7 @@ app.post("/todos", (req, res) => {
 // PUT endpiont to update an existing todo item with the specified `id`
 // provide updated `title` and/or `completed` in the request body as JSON
 app.put("/todos/:id", (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
   const todo = todos.find((t) => t.id === id);
   if (!todo) {
     return res.status(404).json({ error: "Todo not found" });
@@ -54,7 +54,7 @@ app.put("/todos/:id", (req, res) => {
 });
 // DELETE endpoint to remove an existing todo item with the specified `id`
 app.delete("/todos/:id", (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
   const index = todos.findIndex((t) => t.id === id);
   if (index === -1) {
     return res.status(404).json({ error: "Todo not found" });
@@ -82,7 +82,7 @@ app.get("/wishes", (req, res) => {
 
 app.post("/wishes", (req, res) => {
   const wish = {
-    id: wishes.length + 1,
+    id: crypto.randomUUID(),
     title: req.body.title,
     description: req.body.description,
     link: req.body.link,
@@ -93,7 +93,7 @@ app.post("/wishes", (req, res) => {
 });
 
 app.delete("/wishes/:id", (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
   const index = wishes.findIndex((t) => t.id === id);
   if (index === -1) {
     return res.status(404).json({ error: "Wish not found" });
@@ -116,7 +116,7 @@ app.get("/chat", (req, res) => {
 
 app.post("/chat", (req, res) => {
   const message = {
-    id: chat.length + 1,
+    id: crypto.randomUUID(),
     text: req.body.text,
     title: req.body.title,
     side: req.body.side,
@@ -127,7 +127,7 @@ app.post("/chat", (req, res) => {
 });
 
 app.delete("/chat/:id", (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
   const index = chat.findIndex((t) => t.id === id);
   if (index === -1) {
     return res.status(404).json({ error: "Chat not found" });
