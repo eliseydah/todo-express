@@ -17,7 +17,7 @@ app.use(cors());
 
 let todos = [
   {
-    id: 1,
+    id: crypto.randomUUID(),
     title: "Test todo!",
     completed: false,
   },
@@ -68,7 +68,7 @@ app.delete("/todos/:id", (req, res) => {
  */
 let wishes = [
   {
-    id: 1,
+    id: crypto.randomUUID(),
     description: "description",
     title: "Test wishes!",
     link: "link",
@@ -103,7 +103,7 @@ app.delete("/wishes/:id", (req, res) => {
 });
 let chat = [
   {
-    id: 1,
+    id: crypto.randomUUID(),
     text: "text",
     title: "NAme",
     side: "side",
